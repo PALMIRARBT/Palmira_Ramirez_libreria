@@ -16,10 +16,12 @@ def call(Boolean abortPipeline = false, String branchName = null, Boolean waitFo
         // Ejecutar el análisis (intenta sonar-scanner, si no existe simula)
         sh '''
             if command -v sonar-scanner >/dev/null 2>&1; then
-                sonar-scanner
-            else
-                echo "sonar-scanner no encontrado: simulando análisis de SonarQube"
-            fi
+                sonar-scanner \
+                -Dsonar.host.url=$SONAR_HOST_URL \
+                -Dsonar.login=$SONAR_AUTH_TOKEN
+             else
+                 echo "sonar-scanner no encontrado: simulando análisis de SonarQube"
+             fi
         '''
 
         if (waitForQG) {
