@@ -18,7 +18,10 @@ def call(Boolean abortPipeline = false, String branchName = null, Boolean waitFo
             if command -v sonar-scanner >/dev/null 2>&1; then
                 sonar-scanner \
                 -Dsonar.host.url=$SONAR_HOST_URL \
-                -Dsonar.login=$SONAR_AUTH_TOKEN
+                -Dsonar.login=$SONAR_AUTH_TOKEN \
+                -Dsonar.projectKey=pipeline-static-analysis \
+                -Dsonar.projectName=pipeline-static-analysis \
+                -Dsonar.sources=.
              else
                  echo "sonar-scanner no encontrado: simulando análisis de SonarQube"
              fi
